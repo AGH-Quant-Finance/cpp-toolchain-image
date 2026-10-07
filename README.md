@@ -30,7 +30,7 @@ You can check examples written in Python and bash in [examples](./examples/) dir
 
 This repository follows [Semantic Versioning](https://semver.org/) rules. Every commit should be prefixed with [MAJOR], [MINOR] or [PATCH].
 
-As the versions change overtime, builds might start to fail on older repositories. In such case, pinning a specific version to a repository in build scripts.
+As the versions change overtime, builds might start to fail on older repositories. In such case, pin a specific version to a repository in build scripts.
 
 >[!TIP]
 > Altough pinning a specific image version might seem easier to keep the CI green, it is suggested to make necessary adjustments in given repository to comply with latest CBE
