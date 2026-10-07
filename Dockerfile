@@ -4,8 +4,8 @@ WORKDIR /workdir
 
 # Pinned PACKAGE_VERSION arguments may go out of date and they might start breaking the builds.
 # This is a desired behaviour. When builds start to break the PACKAGE_VERSION change must be manually
-# verified. 
-# 
+# verified.
+#
 # When changing PACKAGE_VERSION's be sure to verify changes in ABI, and test the change before publishing.
 
 ARG GCC_VERSION=16
