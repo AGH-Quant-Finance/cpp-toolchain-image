@@ -4,7 +4,7 @@ Common building environment image for agh-quant-finance C++ repositories
 
 ## Overview
 
-This docker image was created to serve as CBE (*Common Build Environment*). It unifies tools versions and makes it possible to contribute and test software on all operating systems and architectures. 
+This Docker image serves as the CBE (*Common Build Environment*) for local development and CI. Published images currently target `linux/amd64`; other architectures require compatible Docker emulation and are not validated natively by this repository.
 
 It should be used both on CI and during local development.
 
@@ -30,13 +30,27 @@ You can check examples written in Python and bash in [examples](./examples/) dir
 
 This repository follows [Semantic Versioning](https://semver.org/) rules. Every commit should be prefixed with [MAJOR], [MINOR] or [PATCH].
 
-As the versions change overtime, builds might start to fail on older repositories. In such case, pin a specific version to a repository in build scripts.
+The examples use `latest` for quick starts. For project CI and reproducible experiments, pin a tested image version (currently `ghcr.io/agh-quant-finance/cpp-toolchain-image:0.1.3`) or digest in the consuming repository.
 
->[!TIP]
-> Altough pinning a specific image version might seem easier to keep the CI green, it is suggested to make necessary adjustments in given repository to comply with latest CBE
+Upgrade pinned versions deliberately after testing the consuming project against the new toolchain. Keep the version visible in its build instructions.
+
+## Pull-request checks
+
+PR CI checks the version prefix and builds the image without publishing it. It then compiles a small C++20 program with GCC and Clang through CMake/Ninja and executes both builds with CTest. These checks exercise the container tools; downstream projects must still run their own tests.
+
+To reproduce the image build and smoke checks locally:
+
+```bash
+docker build --tag qf-toolchain-smoke:local .
+docker run --rm --network none --volume "$PWD:/workspace:ro" --workdir /workspace qf-toolchain-smoke:local bash tests/smoke.sh
+```
+
+The smoke script creates its build directories in the disposable container. Release publishing remains in `.github/workflows/release.yml` and only runs on pushes to `main`. Keep the version prefix in the final merge commit subject; the existing release workflow derives its version bump from that subject. PR-title validation reruns after title edits.
+
+On SELinux hosts, the local bind mount may need `:ro,Z` instead of `:ro`. Relabel only your working copy; this is not needed on the Ubuntu GitHub runner.
 
 ## Contributing
 
 If You wish to add, modify or remove something from cpp-toolchain-image please do so via pull request, with good explanation of why and how it will affect all repositories that rely on this image.
 
-If there is no reaction to your pull request for more than 2 days, contact [Piotr Walczak]((https://github.com/piti83)) directly via GitHub, email or Discord.
+If there is no reaction to your pull request for more than 2 days, contact [Piotr Walczak](https://github.com/piti83) directly via GitHub, email or Discord.
