@@ -4,7 +4,7 @@ Common building environment image for agh-quant-finance C++ repositories
 
 ## Overview
 
-This docker image was created to serve as CBE (*Common Build Environment*). It unifies tools versions and makes it possible to contribute and test software on all operating systems and architectures. 
+This Docker image serves as the CBE (*Common Build Environment*) for local development and CI. Published images currently target `linux/amd64`; other architectures require compatible Docker emulation and are not validated natively by this repository.
 
 It should be used both on CI and during local development.
 
@@ -30,13 +30,13 @@ You can check examples written in Python and bash in [examples](./examples/) dir
 
 This repository follows [Semantic Versioning](https://semver.org/) rules. Every commit should be prefixed with [MAJOR], [MINOR] or [PATCH].
 
-As the versions change overtime, builds might start to fail on older repositories. In such case, pin a specific version to a repository in build scripts.
+The examples use `latest` for quick starts. For reproducible builds, pin a tested release tag or image digest in the consuming repository.
 
->[!TIP]
-> Altough pinning a specific image version might seem easier to keep the CI green, it is suggested to make necessary adjustments in given repository to comply with latest CBE
+> [!TIP]
+> Update the toolchain periodically to keep tools current. Test each consuming project before updating its pinned version.
 
 ## Contributing
 
 If You wish to add, modify or remove something from cpp-toolchain-image please do so via pull request, with good explanation of why and how it will affect all repositories that rely on this image.
 
-If there is no reaction to your pull request for more than 2 days, contact [Piotr Walczak]((https://github.com/piti83)) directly via GitHub, email or Discord.
+If there is no reaction to your pull request for more than 2 days, contact [Piotr Walczak](https://github.com/piti83) directly via GitHub, email or Discord.
