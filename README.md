@@ -30,24 +30,10 @@ You can check examples written in Python and bash in [examples](./examples/) dir
 
 This repository follows [Semantic Versioning](https://semver.org/) rules. Every commit should be prefixed with [MAJOR], [MINOR] or [PATCH].
 
-The examples use `latest` for quick starts. For project CI and reproducible experiments, pin a tested image version (currently `ghcr.io/agh-quant-finance/cpp-toolchain-image:0.1.3`) or digest in the consuming repository.
+The examples use `latest` for quick starts. For reproducible builds, pin a tested release tag or image digest in the consuming repository.
 
-Upgrade pinned versions deliberately after testing the consuming project against the new toolchain. Keep the version visible in its build instructions.
-
-## Pull-request checks
-
-PR CI checks the version prefix and builds the image without publishing it. It then compiles a small C++20 program with GCC and Clang through CMake/Ninja and executes both builds with CTest. These checks exercise the container tools; downstream projects must still run their own tests.
-
-To reproduce the image build and smoke checks locally:
-
-```bash
-docker build --tag qf-toolchain-smoke:local .
-docker run --rm --network none --volume "$PWD:/workspace:ro" --workdir /workspace qf-toolchain-smoke:local bash tests/smoke.sh
-```
-
-The smoke script creates its build directories in the disposable container. Release publishing remains in `.github/workflows/release.yml` and only runs on pushes to `main`. Keep the version prefix in the final merge commit subject; the existing release workflow derives its version bump from that subject. PR-title validation reruns after title edits.
-
-On SELinux hosts, the local bind mount may need `:ro,Z` instead of `:ro`. Relabel only your working copy; this is not needed on the Ubuntu GitHub runner.
+> [!TIP]
+> Update the toolchain periodically to keep tools current. Test each consuming project before updating its pinned version.
 
 ## Contributing
 
